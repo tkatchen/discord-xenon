@@ -1,0 +1,19 @@
+{
+  "name": "discord-xenon",
+  "version": "1.0.0",
+  "description": "A experimental library for bot creators",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Olybear9/discord-xenon.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Olybear9/discord-xenon/issues"
+  },
+  "homepage": "https://github.com/Olybear9/discord-xenon#readme"
+}
