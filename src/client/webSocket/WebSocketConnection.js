@@ -1,10 +1,11 @@
-const WebSocketManager = require("./WebSocketManager")
-const EventEmitter = require("events")
+const EventEmitter = require('events')
 
-class WebSocketConnection {
-    constructor(manager, gateway) {
-        this.manager = manager
-    }
+class WebSocketConnection extends EventEmitter {
+  constructor (manager, gateway) {
+    super()
+    this.manager = manager
+    this.gateway = gateway
+  }
 }
 
-module.exports = WebSocketManager
+module.exports = WebSocketConnection
