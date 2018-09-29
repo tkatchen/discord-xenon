@@ -40,14 +40,8 @@ class Client extends EventEmitter {
     })
   }
 
-  heartbeat (time) {
-    var webSocket = this.webSocket
-    setInterval(function () {
-      webSocket.send({
-        'op': 0,
-        's': webSocket.sequence
-      })
-    }, time)
+  heartbeatTimer (time) {
+    setInterval(() => this.ws.heartbeat(), time)
   }
 }
 

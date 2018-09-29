@@ -2,9 +2,8 @@ const EventEmitter = require('events')
 
 class WebSocketConnection extends EventEmitter {
   constructor (client) {
-    super(client)
+    super()
     this.client = client
-    this.sequence = null
     this.ws = null
   }
 
@@ -20,8 +19,11 @@ class WebSocketConnection extends EventEmitter {
     this.ws.send(JSON.stringify(header))
   }
 
-  setSequence (sequence) {
-    this.sequence = sequence
+  heartbeat () {
+    this.send({
+      op: 1,
+      d: this.client.manager.sequence
+    })
   }
 }
 
