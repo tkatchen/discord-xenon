@@ -6,6 +6,6 @@ const Client = require('./client/Client.js')
 const bot = new Client()
 bot.login('token')
 
-bot.on(10, () => {
-  console.log('a proper response?')
+bot.on('ready', () => {
+  console.log('online!')
 })

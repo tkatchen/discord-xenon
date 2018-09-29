@@ -1,30 +1,29 @@
 const EventEmitter = require('events')
-const Constants = require('../../utils/Constants')
 
 class WebSocketConnection extends EventEmitter {
   constructor (client) {
-    super(client)
+    super()
     this.client = client
     this.ws = null
   }
 
   init (ws) {
-    var scopedClient = this.client
-    var handleEventScoped = this.handleEvent
     this.ws = ws
-    var scopedWs = this.ws
-
+    var forSomeReasonScopingSucks = this
     this.ws.on('message', function (d) {
-      handleEventScoped(scopedClient, JSON.parse(d).op, JSON.parse(d), scopedWs)
-      scopedClient.emit(JSON.parse(d).op)
+      forSomeReasonScopingSucks.emit(JSON.parse(d).op, [JSON.parse(d)])
     })
-  }
-  handleEvent (client, op, params, ws) {
-    Constants.Events[op](client, params, ws)
   }
 
   send (header) {
-    this.ws.send(header)
+    this.ws.send(JSON.stringify(header))
+  }
+
+  heartbeat () {
+    this.send({
+      op: 1,
+      d: this.client.manager.sequence
+    })
   }
 }
 
