@@ -4,13 +4,16 @@ const WebSocketConnection = require('./webSocket/WebSocketConnection')
 const https = require('https')
 const WebSocket = require('ws')
 const ClientManager = require('./ClientManager')
+const WebSocketManager = require('./webSocket/WebSocketManager')
 
 class Client extends EventEmitter {
 
   constructor () {
     super()
     this.webSocket = new WebSocketConnection(this)
+    this.webSocketManager = new WebSocketManager(this)
     this.token = null
+    this.guilds = new Map()
     this.manager = new ClientManager(this)
   }
 
@@ -40,6 +43,10 @@ class Client extends EventEmitter {
     })
   }
 
+  /**
+   * Sets up the heartbeat timer
+   * @param {int} time
+   */
   heartbeatTimer (time) {
     setInterval(() => this.ws.heartbeat(), time)
   }
