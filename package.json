@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Olybear9/discord-xenon/issues"
   },
-  "homepage": "https://github.com/Olybear9/discord-xenon#readme"
+  "homepage": "https://github.com/Olybear9/discord-xenon#readme",
+  "dependencies": {
+    "request": "^2.88.0"
+  }
 }

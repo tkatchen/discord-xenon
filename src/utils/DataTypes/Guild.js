@@ -1,9 +1,12 @@
-const { GuildMember } = require('./GuildMember')
-const { GuildChannel } = require('./GuildChannel')
-const { Emoji } = require('./Emoji')
+const GuildMember = require('./GuildMember')
+const GuildChannel = require('./GuildChannel')
+const BaseType = require('./BaseType')
+const Emoji = require('./Emoji')
 
-class Guild {
-  constructor (data) {
+module.exports = class Guild extends BaseType {
+  constructor (client, data) {
+    super(client, data);
+    this.client = client
     this.id = data.id
     this.name = data.name
     this.icon = data.icon
@@ -38,25 +41,25 @@ class Guild {
   }
 
   parseMembers (members) {
-    var result = []
+    var result = new Map()
     for (var i = 0; i < members.length; i++) {
-      result.push(new GuildMember(members[i]))
+      result.set(members[i].id, new GuildMember(this.client, members[i]))
     }
     return result
   }
 
   parseChannels (channels) {
-    var result = []
+    var result = new Map()
     for (var i = 0; i < channels.length; i++) {
-      result.push(new GuildChannel(channels[i]))
+      result.set(channels[i].id, new GuildChannel(this.client, channels[i]))
     }
     return result
   }
 
   parseEmojis (emojis) {
-    var result = []
+    var result = new Map()
     for (var i = 0; i < emojis.length; i++) {
-      result.push(new Emoji(emojis[i]))
+      result.set(emojis[i].id, new Emoji(this.client, emojis[i]))
     }
     return result
   }
@@ -65,5 +68,3 @@ class Guild {
     return this.channels
   }
 }
-
-module.exports = Guild
