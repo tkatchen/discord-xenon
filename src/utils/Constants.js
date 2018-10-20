@@ -2,6 +2,8 @@ exports.Errors = {
   INVALID_CLIENT_TOKEN: 'Invalid token input'
 }
 
+exports.URL = 'discordapp.com'
+
 exports.OPCodes = {
   0: 'dispatch',
   1: 'heartbeat',

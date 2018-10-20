@@ -5,6 +5,7 @@ const https = require('https')
 const WebSocket = require('ws')
 const ClientManager = require('./ClientManager')
 const WebSocketManager = require('./webSocket/WebSocketManager')
+const request = require('request')
 
 class Client extends EventEmitter {
 
@@ -15,6 +16,7 @@ class Client extends EventEmitter {
     this.token = null
     this.guilds = new Map()
     this.manager = new ClientManager(this)
+    this.url = null
   }
 
   /**
@@ -36,6 +38,8 @@ class Client extends EventEmitter {
         }
 
         if (JSON.parse(d).shards) {
+          this.url = JSON.parse(d)['url']
+          console.log(this.url)
           var ws = new WebSocket(JSON.parse(d)['url'])
           scopedWebSocket.init(ws)
         }
@@ -49,6 +53,20 @@ class Client extends EventEmitter {
    */
   heartbeatTimer (time) {
     setInterval(() => this.ws.heartbeat(), time)
+  }
+
+  send (path, data) {
+    var headers = {
+      "Authorization": `Bot ${this.token}`,
+      "Content-Type": 'application/json'
+    }
+    request.post({
+        url: `https://${Constants.URL}/api/v6${path}`,
+        body: JSON.stringify(data),
+        headers: headers
+      }, function (error) {
+        this.emit('error', error)
+    })
   }
 }
 

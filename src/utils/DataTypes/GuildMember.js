@@ -1,8 +1,11 @@
-const { User } = require('./User')
+const User = require('./User')
+const BaseType = require('./BaseType')
 
-class GuildMembers {
-  constructor (data) {
-    this.user = new User(data.user)
+module.exports = class GuildMembers extends BaseType {
+  constructor (client, data) {
+    super(client, data)
+    this.client = client
+    this.user = new User(this.client, data.user)
     this.nick = data.nick
     this.roles = data.roles
     this.joinedAt = data.joined_at
@@ -10,5 +13,3 @@ class GuildMembers {
     this.mute = data.mute
   }
 }
-
-module.exports = GuildMembers
