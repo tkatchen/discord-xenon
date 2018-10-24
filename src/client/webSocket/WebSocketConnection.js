@@ -9,9 +9,8 @@ class WebSocketConnection extends EventEmitter {
 
   init (ws) {
     this.ws = ws
-    var forSomeReasonScopingSucks = this
-    this.ws.on('message', function (d) {
-      forSomeReasonScopingSucks.emit(JSON.parse(d).op, [JSON.parse(d)])
+    this.ws.on('message', d => {
+      this.emit(JSON.parse(d).op, [JSON.parse(d)])
     })
   }
 

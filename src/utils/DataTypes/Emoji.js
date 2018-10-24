@@ -1,8 +1,13 @@
 const User = require('./User')
 const Role = require('./Role')
-const BaseType = require('./BaseType')
+const BaseDataType = require('./BaseDataType')
 
-module.exports = class Emoji extends BaseType {
+/**
+ * Represents a Generic Emoji
+ * @extends BaseDataType
+ * @type {class}
+ */
+class Emoji extends BaseDataType {
   constructor (client, data) {
     super(client, data)
     this.client = client
@@ -23,3 +28,5 @@ module.exports = class Emoji extends BaseType {
     return result
   }
 }
+
+module.exports = Emoji

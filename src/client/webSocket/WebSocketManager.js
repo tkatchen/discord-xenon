@@ -5,6 +5,7 @@ class WebSocketManager {
     this.handlers = {}
 
     // Add all of the handlers
+    this.add('READY', require('./handlers/ready'))
     this.add('CHANNEL_CREATE', require('./handlers/channelCreate'))
     this.add('CHANNEL_UPDATE', require('./handlers/channelUpdate'))
     this.add('CHANNEL_DELETE', require('./handlers/channelDelete'))
