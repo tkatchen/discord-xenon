@@ -1,6 +1,11 @@
-const BaseType = require('./BaseType')
-
-module.exports = class User extends BaseType {
+const BaseDataType = require('./BaseDataType')
+const Snowflake = require('../Snowflake')
+/**
+ * Represents a generic Discord User
+ * @extends BaseDataType
+ * @type {class}
+ */
+class User extends BaseDataType {
   constructor (client, data) {
     super(client, data)
     this.client = client
@@ -14,4 +19,10 @@ module.exports = class User extends BaseType {
     this.verified = data.verified
     this.email = data.email
   }
+
+  get createdTimestamp() {
+    return Snowflake.getTimestamp(this.id)
+  }
 }
+
+module.exports = User

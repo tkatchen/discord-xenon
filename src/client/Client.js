@@ -7,50 +7,47 @@ const ClientManager = require('./ClientManager')
 const WebSocketManager = require('./webSocket/WebSocketManager')
 const request = require('request')
 
+/**
+ * Represents a new discord Client
+ * @extends EventEmitter
+ * @type {class}
+ */
 class Client extends EventEmitter {
 
   constructor () {
     super()
+    this.guildSize = null
     this.webSocket = new WebSocketConnection(this)
     this.webSocketManager = new WebSocketManager(this)
     this.token = null
     this.guilds = new Map()
+    this.channels = new Map()
     this.manager = new ClientManager(this)
     this.url = null
+
   }
 
   /**
    * Logins the bot
    * @param {string} token
+   * @example <Client>.login('NTAwMDk2MjM5ODgzMjU1ODQx.Dq5MLw.bm5tDRKW1Q8DebqcbfiBgNVq5Fg')
    */
   login (token = this.token) {
     if (!token || typeof token !== 'string') {
       return console.error(Constants.Errors.INVALID_CLIENT_TOKEN)
     }
-    this.token = token
     this.manager.setToken(token)
-    // this.webSocket is removed in the https get
-    var scopedWebSocket = this.webSocket
-    https.get({host: 'discordapp.com', path: `/api/gateway/bot?token=${token}`}, function (res) {
-      res.on('data', (d) => {
-        if (JSON.parse(d).code === 0) {
-          return console.error(Constants.Errors.INVALID_CLIENT_TOKEN)
-        }
+    this.token = token
 
-        if (JSON.parse(d).shards) {
-          this.url = JSON.parse(d)['url']
-          console.log(this.url)
-          var ws = new WebSocket(JSON.parse(d)['url'])
-          scopedWebSocket.init(ws)
-        }
-      })
+    request.get(`https://${Constants.URL}/api/gateway/bot?token=${this.token}`).on('data', d => {
+      if(JSON.parse(d).code === 0) {
+        return console.error(Constants.Errors.INVALID_CLIENT_TOKEN)
+      }
+      this.url = JSON.parse(d).url
+      this.webSocket.init(new WebSocket(this.url))
     })
   }
 
-  /**
-   * Sets up the heartbeat timer
-   * @param {int} time
-   */
   heartbeatTimer (time) {
     setInterval(() => this.ws.heartbeat(), time)
   }
@@ -66,6 +63,17 @@ class Client extends EventEmitter {
         headers: headers
       }, function (error) {
         this.emit('error', error)
+    })
+  }
+
+  completeGuilds() {
+    return new Promise((resolve, reject) => {
+      var loop = setInterval(() => {
+        if(this.guilds && this.guildSize <= this.guilds.size) {
+          resolve()
+          clearInterval(loop)
+        }
+      }, 500)
     })
   }
 }

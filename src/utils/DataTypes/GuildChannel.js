@@ -1,9 +1,14 @@
 const User = require('./User')
 const Constants = require('../Constants')
-const BaseType = require('./BaseType')
+const BaseDataType = require('./BaseDataType')
 const https = require('https')
 
-module.exports = class GuildChannel extends BaseType {
+/**
+ * Represents a generic Guild Channel
+ * @extends BaseDataType
+ * @type {class}
+ */
+class GuildChannel extends BaseDataType {
   constructor (client, data) {
     super(client, data)
     this.client = client
@@ -39,3 +44,5 @@ module.exports = class GuildChannel extends BaseType {
     this.client.send(`/channels/${this.id}/messages`, {content: 'hey'})
   }
 }
+
+module.exports = GuildChannel

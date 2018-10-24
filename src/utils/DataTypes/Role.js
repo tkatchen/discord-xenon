@@ -1,6 +1,11 @@
-const BaseType = require('./BaseType')
+const BaseDataType = require('./BaseDataType')
 
-module.exports = class Role extends BaseType {
+/**
+ * Represents a generic Guild role
+ * @extends BaseDataType
+ * @type {class}
+ */
+class Role extends BaseDataType {
   constructor (client, data) {
     super(client, data)
     this.client = client
@@ -14,3 +19,5 @@ module.exports = class Role extends BaseType {
     this.mentionable = data.mentionable
   }
 }
+
+module.exports = Role
