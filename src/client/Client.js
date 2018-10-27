@@ -17,6 +17,7 @@ class Client extends EventEmitter {
   constructor () {
     super()
     this.guildSize = null
+    this.ready = false
     this.webSocket = new WebSocketConnection(this)
     this.webSocketManager = new WebSocketManager(this)
     this.token = null
@@ -63,17 +64,6 @@ class Client extends EventEmitter {
         headers: headers
       }, function (error) {
         this.emit('error', error)
-    })
-  }
-
-  completeGuilds() {
-    return new Promise((resolve, reject) => {
-      var loop = setInterval(() => {
-        if(this.guilds && this.guildSize <= this.guilds.size) {
-          resolve()
-          clearInterval(loop)
-        }
-      }, 500)
     })
   }
 }
