@@ -1,8 +1,10 @@
 exports.Errors = {
-  INVALID_CLIENT_TOKEN: 'Invalid token input'
-}
+  INVALID_CLIENT_TOKEN: 'Invalid token input',
+  MESSAGE_TOO_LONG: 'Message can not be longer than 2000 characters',
+  EMPTY_MESSAGE: 'Cannot send an empty message',
+};
 
-exports.URL = 'discordapp.com'
+exports.URL = 'discordapp.com';
 
 exports.OPCodes = {
   0: 'dispatch',
@@ -15,8 +17,8 @@ exports.OPCodes = {
   8: 'requestGuildMember',
   9: 'invalidSession',
   10: 'hello',
-  11: 'heartbeatAck'
-}
+  11: 'heartbeatAck',
+};
 
 exports.GatewayClose = {
   4000: 'unknownError',
@@ -29,5 +31,5 @@ exports.GatewayClose = {
   4008: 'rateLimited',
   4009: 'sessionTimeout',
   4010: 'invalidShard',
-  4011: 'shardingRequired'
-}
+  4011: 'shardingRequired',
+};
