@@ -1,0 +1,10 @@
+{
+    "extends": "./node_modules/eslint-config-google/index.js",
+    "parserOptions": {
+        "ecmaVersion": 6
+    },
+    "rules": {
+      "max-len": 0,
+      "require-jsdoc": 0
+    }
+}

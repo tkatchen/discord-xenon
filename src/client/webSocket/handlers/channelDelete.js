@@ -1,8 +1,8 @@
-var Handler = require('./handler')
+const Handler = require('./handler');
 class ChannelDelete extends Handler {
-  handle (packet) {
-    return this.manager.client.emit('channelDelete', packet.d)
+  handle(packet) {
+    return this.manager.client.emit('channelDelete', packet.d);
   }
 }
 
-module.exports = ChannelDelete
+module.exports = ChannelDelete;
