@@ -14,20 +14,38 @@ const request = require('request');
 class Client extends EventEmitter {
   constructor() {
     super();
+    // guildSize recieved from the ready event, used to fire the ready event at a proper time
     this.guildSize = null;
+    // Wether or not the ready event has fired
     this.ready = false;
+    // The client websocket
     this.webSocket = new WebSocketConnection(this);
+    // The websocket manager
     this.webSocketManager = new WebSocketManager(this);
-    this.token = null;
-    this.guilds = new Map();
-    this.channels = new Map();
+    // The client manager
     this.manager = new ClientManager(this);
-    this.url = null;
+
+    /**
+     * The token for your bot
+     * @type {string}
+     */
+    this.token = null;
+
+    /**
+     * A list of guilds that the client is in
+     * @type {Map.<Snowflake, Guild>}
+     */
+    this.guilds = new Map();
+    /**
+     * A list of channels that the client is in
+     * @type {Map.<Snowflake, GuildChannel>}
+     */
+    this.channels = new Map();
   }
 
   /**
    * Logins the bot
-   * @param {string} token
+   * @param {string} token The token for your application
    * @example <Client>.login('NTAwMDk2MjM5ODgzMjU1ODQx.Dq5MLw.bm5tDRKW1Q8DebqcbfiBgNVq5Fg')
    */
   login(token = this.token) {
@@ -41,11 +59,11 @@ class Client extends EventEmitter {
       if (JSON.parse(d).code === 0) {
         return console.error(new Error(Constants.Errors.INVALID_CLIENT_TOKEN));
       }
-      this.url = JSON.parse(d).url;
-      this.webSocket.init(new WebSocket(this.url));
+      this.webSocket.init(new WebSocket(JSON.parse(d).url));
     });
   }
 
+  // Sends a heartbeat every predefined time
   heartbeatTimer(time) {
     setInterval(() => this.ws.heartbeat(), time);
   }
@@ -59,7 +77,7 @@ class Client extends EventEmitter {
       url: `https://${Constants.URL}/api/v6${path}`,
       body: JSON.stringify(data),
       headers: headers,
-    })
+    });
   }
 }
 

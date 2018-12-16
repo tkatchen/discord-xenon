@@ -39,6 +39,11 @@ class GuildChannel extends BaseDataType {
     return result;
   }
 
+  /**
+   * Sends a message to discord
+   * @param  {string} content The content to be sent to the channel
+   * @throws {RangeError} Can only send messages 0 < message < 2000
+   */
   send(content) {
     if (content.length >= 2000) return console.console.error(new RangeError(Constants.Errors.MESSAGE_TOO_LONG));
     if (content.length <= 0) return console.error(new RangeError(Constants.Errors.EMPTY_MESSAGE));
