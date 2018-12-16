@@ -70,7 +70,7 @@ class Guild extends BaseDataType {
 
     /**
      * AFK timeout timer in seconds
-     * @type {integer}
+     * @type {number}
      */
     this.afkTimeout = data.afk_timeout;
 
@@ -88,19 +88,19 @@ class Guild extends BaseDataType {
 
     /**
      * The verification level of the current Guild
-     * @type {integer}
+     * @type {number}
      */
     this.verificationLevel = data.verification_level;
 
     /**
      * Default message notifications level
-     * @type {integer}
+     * @type {number}
      */
     this.defaultMessageNotifications = data.default_message_notifications;
 
     /**
      * Explicit Content filter level
-     * @type {integer}
+     * @type {number}
      */
     this.explicitContentFilter = data.explicit_content_filter;
 
@@ -165,13 +165,17 @@ class Guild extends BaseDataType {
   }
 
   /**
-   * The owner of the guild
-   * @type {?GuildMember}
+   * Gets the owner of the guild
+   * @return {GuildMember} GuildMember of the owner
    */
   get owner() {
     return this.members.get(this.ownerID);
   }
 
+  /**
+   * Gets timestamp that guild was created
+   * @return {Date} ms representation of the date
+   */
   get createdTimestamp() {
     return Snowflake.getTimestamp(this.id);
   }
