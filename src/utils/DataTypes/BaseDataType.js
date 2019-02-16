@@ -3,19 +3,19 @@
  * @type {class}
  */
 class BaseDataType {
-  constructor(client, data) {
+  constructor (client, data) {
     /**
      * [The client that initialized the type]
      * @type {Client}
      */
-    this.client = client;
+    this.client = client
 
     /**
      * [Data to create the new DataType]
      * @type {Object}
      */
-    this.data = data;
+    this.data = data
   }
 }
 
-module.exports = BaseDataType;
+module.exports = BaseDataType

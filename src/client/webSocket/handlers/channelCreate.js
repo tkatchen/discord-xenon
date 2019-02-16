@@ -1,8 +1,8 @@
-const Handler = require('./handler');
+const Handler = require('./handler')
 class ChannelCreate extends Handler {
-  handle(packet) {
-    return this.manager.client.emit('channelCreate', packet.d);
+  handle (packet) {
+    return this.manager.client.emit('channelCreate', packet.d)
   }
 }
 
-module.exports = ChannelCreate;
+module.exports = ChannelCreate

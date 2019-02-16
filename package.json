@@ -4,7 +4,8 @@
   "description": "A experimental library for bot creators",
   "main": "index.js",
   "scripts": {
-    "generate-docs": "node_modules/.bin/jsdoc --configure .jsdoc.json --verbose"
+    "generate-docs": "node_modules/.bin/jsdoc --configure .jsdoc.json --verbose",
+    "eslint": "node_modules/.bin/eslint ./src --fix"
   },
   "repository": {
     "type": "git",
@@ -21,7 +22,12 @@
     "ws": "^6.1.3"
   },
   "devDependencies": {
-    "eslint": "^5.8.0",
-    "eslint-config-google": "^0.11.0"
+    "eslint": "^5.14.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "jsdoc": "^3.5.5"
   }
 }
