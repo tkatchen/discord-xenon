@@ -1,8 +1,10 @@
+const request = require('request');
+const constants = require('../utils/Constants.js')
+
 class ClientManager {
   constructor(client) {
     this.client = client;
-    this.ws = client.webSocket;
-    this.heartbeatTimer = client.heartbeatTimer;
+    this.ws = client.webSocket
     this.token = client.token;
     this.sequence = null;
     this.sessionId = null;
@@ -55,6 +57,46 @@ class ClientManager {
 
   setSequence(sequence) {
     this.sequence = sequence;
+  }
+
+  send(path, data) {
+    const headers = {
+      'Authorization': `Bot ${this.token}`,
+      'Content-Type': 'application/json',
+    };
+    request.post({
+      url: `https://${constants.URL}/api/v6${path}`,
+      body: JSON.stringify(data),
+      headers: headers,
+    }, (err, response, body) => {
+      if(err){
+        console.error(err)
+      }
+      if(body.code){
+        console.error(new Error(JSON.parse(body).message))
+      }
+    });
+  }
+
+  get(path, data){
+    const headers = {
+      'Authorization': `Bot ${this.token}`,
+      'Content-Type': 'application/json',
+    };
+    return new Promise(function(resolve, reject) {
+      request.get({
+        url: `https://${constants.URL}/api/v6${path}`,
+        qs: JSON.stringify(data),
+        headers: headers,
+      }, (err, response, body) => {
+        resolve(body)
+      })
+    });
+  }
+
+  // Sends a heartbeat every predefined time
+  heartbeatTimer(time) {
+    setInterval(() => this.ws.heartbeat(), time);
   }
 }
 module.exports = ClientManager;

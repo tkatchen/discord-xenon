@@ -17,7 +17,8 @@
   },
   "homepage": "https://github.com/Olybear9/discord-xenon#readme",
   "dependencies": {
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "ws": "^6.1.3"
   },
   "devDependencies": {
     "eslint": "^5.8.0",

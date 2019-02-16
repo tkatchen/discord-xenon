@@ -1,4 +1,4 @@
-const Constants = require('../utils/Constants');
+const constants = require('../utils/Constants');
 const EventEmitter = require('events');
 const WebSocketConnection = require('./webSocket/WebSocketConnection');
 const WebSocket = require('ws');
@@ -50,33 +50,16 @@ class Client extends EventEmitter {
    */
   login(token = this.token) {
     if (!token || typeof token !== 'string') {
-      return console.error(new TypeError(Constants.Errors.INVALID_CLIENT_TOKEN));
+      return console.error(new TypeError(constants.Errors.INVALID_CLIENT_TOKEN));
     }
     this.manager.setToken(token);
     this.token = token;
 
-    request.get(`https://${Constants.URL}/api/gateway/bot?token=${this.token}`).on('data', (d) => {
+    request.get(`https://${constants.URL}/api/gateway/bot?token=${this.token}`).on('data', (d) => {
       if (JSON.parse(d).code === 0) {
-        return console.error(new Error(Constants.Errors.INVALID_CLIENT_TOKEN));
+        return console.error(new Error(constants.Errors.INVALID_CLIENT_TOKEN));
       }
       this.webSocket.init(new WebSocket(JSON.parse(d).url));
-    });
-  }
-
-  // Sends a heartbeat every predefined time
-  heartbeatTimer(time) {
-    setInterval(() => this.ws.heartbeat(), time);
-  }
-
-  send(path, data) {
-    const headers = {
-      'Authorization': `Bot ${this.token}`,
-      'Content-Type': 'application/json',
-    };
-    request.post({
-      url: `https://${Constants.URL}/api/v6${path}`,
-      body: JSON.stringify(data),
-      headers: headers,
     });
   }
 }

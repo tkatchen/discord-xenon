@@ -1,6 +1,6 @@
 const User = require('./User');
 const BaseDataType = require('./BaseDataType');
-const Constants = require('../Constants');
+const constants = require('../Constants');
 
 /**
  * Represents a generic Guild Channel
@@ -45,9 +45,29 @@ class GuildChannel extends BaseDataType {
    * @throws {RangeError} Can only send messages 0 < message < 2000
    */
   send(content) {
-    if (content.length >= 2000) return console.console.error(new RangeError(Constants.Errors.MESSAGE_TOO_LONG));
-    if (content.length <= 0) return console.error(new RangeError(Constants.Errors.EMPTY_MESSAGE));
-    this.client.send(`/channels/${this.id}/messages`, {content: content});
+    if (content.length > 2000) return console.error(new RangeError(constants.Errors.MESSAGE_TOO_LONG));
+    if (content.length <= 0) return console.error(new RangeError(constants.Errors.EMPTY_MESSAGE));
+    this.client.manager.send(`/channels/${this.id}/messages`, {content: content});
+  }
+
+  /**
+   * Gets a group of message
+   * @param  {Snowflake} id The message ID
+   * @param  {?Number} [limit=50] The number of messages to get, 50 by default
+   * @param  {?String} [type='around'] Where to get the messages, possible values are: before, after, or around.
+   */
+  async getMessages(id, limit=50, type='around'){
+    if(!id) return console.error(new Error("Must pass an ID"))
+    if(limit <= 0) limit = 50
+    if(limit > 100) limit = 100
+    if(type != 'around' || type != 'before' || type != 'after') type = 'around'
+
+    let data = {limit: limit}
+    data[type] = id
+
+    let messages = await this.client.manager.get(`/channels/${this.id}/messages`, data)
+    //messages = messages.map(msg => new Message(msg))
+    return JSON.parse(messages)
   }
 }
 
