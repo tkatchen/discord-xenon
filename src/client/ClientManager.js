@@ -83,10 +83,10 @@ class ClientManager {
       'Authorization': `Bot ${this.token}`,
       'Content-Type': 'application/json',
     };
-    return new Promise(function(resolve, reject) {
+    return new Promise((resolve, reject) => {
       request.get({
         url: `https://${constants.URL}/api/v6${path}`,
-        qs: JSON.stringify(data),
+        qs: (data),
         headers: headers,
       }, (err, response, body) => {
         resolve(body)

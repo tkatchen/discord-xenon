@@ -59,8 +59,8 @@ class GuildChannel extends BaseDataType {
   async getMessages(id, limit=50, type='around'){
     if(!id) return console.error(new Error("Must pass an ID"))
     if(limit <= 0) limit = 50
-    if(limit > 100) limit = 100
-    if(type != 'around' || type != 'before' || type != 'after') type = 'around'
+    if(limit >= 100) limit = 100
+    if(type != 'around' && type != 'before' && type != 'after') type = 'around'
 
     let data = {limit: limit}
     data[type] = id
