@@ -59,7 +59,7 @@ class ClientManager {
     this.sequence = sequence
   }
 
-  send (path, data) {
+  post (path, data) {
     const headers = {
       'Authorization': `Bot ${this.token}`,
       'Content-Type': 'application/json'

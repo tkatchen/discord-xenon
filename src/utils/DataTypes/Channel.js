@@ -48,7 +48,7 @@ class Channel extends BaseDataType {
     if (this.type === 2) return console.error(new TypeError("You can't send messages to a Voice Channel"))
     if (content.length > 2000) return console.error(new RangeError(constants.Errors.MESSAGE_TOO_LONG))
     if (content.length <= 0) return console.error(new RangeError(constants.Errors.EMPTY_MESSAGE))
-    this.client.manager.send(`/channels/${this.id}/messages`, { content: content })
+    this.client.manager.post(`/channels/${this.id}/messages`, { content: content })
   }
 
   /**
