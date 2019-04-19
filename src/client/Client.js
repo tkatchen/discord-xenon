@@ -38,7 +38,7 @@ class Client extends EventEmitter {
     this.guilds = new Map()
     /**
      * A list of channels that the client is in
-     * @type {Map.<Snowflake, GuildChannel>}
+     * @type {Map.<Snowflake, Channel>}
      */
     this.channels = new Map()
   }
