@@ -4,19 +4,19 @@
   "description": "A experimental library for bot creators",
   "main": "index.js",
   "scripts": {
-    "generate-docs": "node_modules/.bin/jsdoc --configure .jsdoc.json --verbose",
-    "eslint": "node_modules/.bin/eslint ./src --fix"
+    "generate-docs": "node_modules/.bin/jsdoc src -r -d docs",
+    "eslint": "node_modules/.bin/eslint ./src"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Olybear9/discord-xenon.git"
+    "url": "git+https://github.com/tklaxbro/discord-xenon.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Olybear9/discord-xenon/issues"
+    "url": "https://github.com/tklaxbro/discord-xenon/issues"
   },
-  "homepage": "https://github.com/Olybear9/discord-xenon#readme",
+  "homepage": "https://github.com/tklaxbro/discord-xenon#readme",
   "dependencies": {
     "request": "^2.88.0",
     "ws": "^6.1.3"
