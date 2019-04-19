@@ -2,7 +2,6 @@
  * A unique ID given to each Discord user representing the timestamp and other information.
  * @typedef {string} Snowflake
  */
-
 const SnowflakeUtil = {
   getTimestamp: (snowflake) => {
     // First we convert it to a binary representation

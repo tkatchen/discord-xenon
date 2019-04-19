@@ -1,4 +1,5 @@
 const User = require('./User')
+const Message = require('./Message.js')
 const BaseDataType = require('./BaseDataType')
 const constants = require('../Constants')
 
@@ -23,20 +24,12 @@ class Channel extends BaseDataType {
     this.bitrate = data.bitrate
     this.userLimit = data.user_limit
     this.rateLimitPerUser = data.rate_limit_per_user
-    this.recipients = (data.recipients) ? this.parseUsers(data.recipients) : null
+    this.recipients = (data.recipients) ? this.parseDataType(User, data.recipients) : null
     this.icon = data.icon
     this.ownerID = data.owner_id
     this.applicationID = data.application_id
     this.parentID = data.parent_id
     this.lastPinTimestamp = data.last_pin_timestamp
-  }
-
-  parseUsers (users) {
-    const result = new Map()
-    for (let i = 0; i < users.length; i++) {
-      result.set(users[i].id, new User(users[i]))
-    }
-    return result
   }
 
   /**
@@ -56,6 +49,7 @@ class Channel extends BaseDataType {
    * @param  {Snowflake} id The message ID
    * @param  {?Number} [limit=50] The number of messages to get, 50 by default
    * @param  {?String} [type='around'] Where to get the messages, possible values are: before, after, or around.
+   * @returns {Array<Message>} An array of message objects
    */
   async getMessages (id, limit = 50, type = 'around') {
     if (!id) return console.error(new Error('Must pass an ID'))
@@ -67,8 +61,8 @@ class Channel extends BaseDataType {
     data[type] = id
 
     let messages = await this.client.manager.get(`/channels/${this.id}/messages`, data)
-    // messages = messages.map(msg => new Message(msg))
-    return JSON.parse(messages)
+    messages = JSON.parse(messages).map(msg => new Message(this.client, msg))
+    return messages
   }
 }
 

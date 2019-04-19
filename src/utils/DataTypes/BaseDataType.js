@@ -16,6 +16,14 @@ class BaseDataType {
      */
     this.data = data
   }
+
+  parseDataType (Type, data) {
+    const result = new Map()
+    for (let i = 0; i < data.length; i++) {
+      result.set(data[i].id, new Type(this.client, data[i]))
+    }
+    return result
+  }
 }
 
 module.exports = BaseDataType

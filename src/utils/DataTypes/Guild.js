@@ -108,13 +108,13 @@ class Guild extends BaseDataType {
      * A map of the Guild Roles
      * @type {Map.<Snowflake, Role>}
      */
-    this.roles = this.parseRoles(data.roles)
+    this.roles = this.parseDataType(Role, data.roles)
 
     /**
      * A map of the Guild Emojis
      * @type {Map.<Snowflake, Emoji>}
      */
-    this.emojis = this.parseEmojis(data.emojis)
+    this.emojis = this.parseDataType(Emoji, data.emojis)
     this.features = data.features
     this.mfaLevel = data.mfa_level
     this.applicationID = data.application_id
@@ -126,42 +126,9 @@ class Guild extends BaseDataType {
     this.unavailable = data.unavailable
     this.memberCount = data.member_count
     this.voiceStates = data.voice_states
-    this.members = this.parseMembers(data.members)
-    this.channels = this.parseChannels(data.channels)
+    this.members = this.parseDataType(GuildMember, data.members)
+    this.channels = this.parseDataType(Channel, data.channels)
     this.presences = data.presences
-  }
-
-  parseMembers (members) {
-    const result = new Map()
-    for (let i = 0; i < members.length; i++) {
-      result.set(members[i].id, new GuildMember(this.client, members[i]))
-    }
-    return result
-  }
-
-  parseChannels (channels) {
-    const result = new Map()
-    for (let i = 0; i < channels.length; i++) {
-      result.set(channels[i].id, new Channel(this.client, channels[i]))
-      this.client.channels.set(channels[i].id, new Channel(this.client, channels[i]))
-    }
-    return result
-  }
-
-  parseEmojis (emojis) {
-    const result = new Map()
-    for (let i = 0; i < emojis.length; i++) {
-      result.set(emojis[i].id, new Emoji(this.client, emojis[i]))
-    }
-    return result
-  }
-
-  parseRoles (roles) {
-    const result = new Map()
-    for (let i = 0; i < roles.length; i++) {
-      result.set(roles[i].id, new Role(this.client, roles[i]))
-    }
-    return result
   }
 
   /**
