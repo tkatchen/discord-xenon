@@ -10,7 +10,7 @@ class WebSocketManager {
     this.add('CHANNEL_UPDATE', require('./handlers/channelUpdate'))
     this.add('CHANNEL_DELETE', require('./handlers/channelDelete'))
     this.add('CHANNEL_PINS_UPDATE', require('./handlers/channelPinsUpdate'))
-    // this.add('GUILD_BAN_ADD', require('./handlers/guildBanAdd'))
+    this.add('GUILD_BAN_ADD', require('./handlers/guildBanAdd'))
     // this.add('GUILD_BAN_REMOVE', require('./handlers/guildBanRemove'))
     this.add('GUILD_CREATE', require('./handlers/guildCreate'))
     this.add('GUILD_DELETE', require('./handlers/guildDelete'))

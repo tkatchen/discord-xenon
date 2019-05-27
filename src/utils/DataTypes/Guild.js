@@ -106,15 +106,15 @@ class Guild extends BaseDataType {
 
     /**
      * A map of the Guild Roles
-     * @type {Map.<Snowflake, Role>}
+     * @type {?Map.<Snowflake, Role>}
      */
-    this.roles = this.parseDataType(Role, data.roles)
+    this.roles = data.roles ? this.parseDataType(Role, data.roles) : null
 
     /**
      * A map of the Guild Emojis
-     * @type {Map.<Snowflake, Emoji>}
+     * @type {?Map.<Snowflake, Emoji>}
      */
-    this.emojis = this.parseDataType(Emoji, data.emojis)
+    this.emojis = data.emojis ? this.parseDataType(Emoji, data.emojis) : null
     this.features = data.features
     this.mfaLevel = data.mfa_level
     this.applicationID = data.application_id
@@ -126,8 +126,8 @@ class Guild extends BaseDataType {
     this.unavailable = data.unavailable
     this.memberCount = data.member_count
     this.voiceStates = data.voice_states
-    this.members = this.parseDataType(GuildMember, data.members)
-    this.channels = this.parseDataType(Channel, data.channels)
+    this.members = data.members ? this.parseDataType(GuildMember, data.members) : null
+    this.channels = data.channels ? this.parseDataType(Channel, data.channels) : null
     this.presences = data.presences
   }
 
